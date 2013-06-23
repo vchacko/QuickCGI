@@ -1,0 +1,46 @@
+package MessageBox;
+
+#####################################################################################
+#	CopyRight (C) 2005 Varghese Chacko, vctheguru@gmail.com						    #
+#																					#
+#    This file is part of QuickCGI.													#
+#																					#
+#    QuickCGI is free software: you can redistribute it and/or modify				#
+#    it under the terms of the GNU General Public License as published by			#
+#    the Free Software Foundation, either version 3 of the License, or				#
+#    (at your option) any later version.											#
+#																					#
+#    QuickCGI is distributed in the hope that it will be useful,					#
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of					#
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the					#
+#    GNU General Public License for more details.									#
+#																					#
+#    You should have received a copy of the GNU General Public License				#
+#    along with QuickCGI.  If not, see <http://www.gnu.org/licenses/>.				#
+#																					#
+##################################################################################### 
+use Gtk '-init';
+
+# Message Box is a Gtk::Dialog
+@MessageBox::ISA = qw(Gtk::Dialog);
+
+use strict;
+my $true = 1;
+sub new{
+	my $class = shift;
+	my $message = shift;
+	my $this = new Gtk::Dialog();
+	bless($this,$class);
+	$message = "\n      ".$message."          \n";	
+	my $button = new Gtk::Button( "Close" );
+        $button->signal_connect( 'clicked', sub { $this->destroy(); });
+	$this->action_area->pack_start( $button, $true, $true, 0 );
+
+	my $label = new Gtk::Label( $message );
+        $this->vbox->pack_start( $label, $true, $true, 0 );
+
+	$this->set_position( 'center' );
+        $this->show_all();
+		
+}
+1;
